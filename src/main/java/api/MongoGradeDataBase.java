@@ -64,6 +64,7 @@ public class MongoGradeDataBase implements GradeDataBase {
                         .build();
             }
             else {
+                System.out.println(responseBody.getInt(STATUS_CODE));
                 throw new RuntimeException("Grade could not be found for course: " + course
                                            + " and username: " + username);
             }
@@ -271,7 +272,7 @@ public class MongoGradeDataBase implements GradeDataBase {
 
             if (responseBody.getInt(STATUS_CODE) == SUCCESS_CODE) {
                 final JSONObject team = responseBody.getJSONObject("team");
-                final String name = team.getJSONObject("name").toString();
+                final String name = team.getString("name");
                 final JSONArray membersArray = team.getJSONArray("members");
                 final String[] members = new String[membersArray.length()];
                 for (int i = 0; i < membersArray.length(); i++) {
